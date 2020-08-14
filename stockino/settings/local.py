@@ -1,6 +1,6 @@
 import os
 from decimal import Decimal
-from decouple import config
+#from decouple import config
 from datetime import datetime
 
 
