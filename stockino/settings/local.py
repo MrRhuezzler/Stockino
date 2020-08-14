@@ -19,7 +19,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', 'localhost']
 
-EMAIL_HOST = 'smtp.googlemail.com'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = config('EMAIL_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_PASS')
 EMAIL_PORT = 587

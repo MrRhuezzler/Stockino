@@ -1,5 +1,5 @@
 import os
-import dj_database_url
+#import dj_database_url
 from decimal import Decimal
 from decouple import config
 from datetime import datetime
@@ -16,23 +16,22 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['.herokuapp.com', '.morphosis.org.in']
+ALLOWED_HOSTS = ['.herokuapp.com']
 
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = config('EMAIL_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_PASS')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-BASE_URL = 'stock-bridge.herokuapp.com'
+BASE_URL = 'stockino.herokuapp.com'
 
 DEFAULT_ACTIVATION_DAYS = 7
 
 # This allows sendgrid to send emails to the specified id whenever server error occurs.
-DEFAULT_FROM_EMAIL = 'Morphosis Stock Bridge <morphosis@nitmz.ac.in>'
+DEFAULT_FROM_EMAIL = 'E-Club  Stockino'
 MANAGERS = (
-    ('Morphosis NITMZ', 'morphosis@nitmz.ac.in'),
 )
 ADMINS = MANAGERS
 
@@ -43,8 +42,8 @@ RATE_OF_INTEREST = Decimal(0.15)  # 15%
 TAX_RATE = Decimal(0.40)  # 40%
 
 # Global settings
-START_TIME = datetime(2018, 5, 4, 19, 30, 0)
-STOP_TIME = datetime(2018, 5, 5, 2, 00, 0)
+START_TIME = datetime(2020, 5, 4, 19, 30, 0)
+STOP_TIME = datetime(2021, 5, 5, 2, 00, 0)
 
 
 # Application definition
@@ -84,7 +83,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'stock_bridge.urls'
+ROOT_URLCONF = 'stockino.urls'
 LOGOUT_REDIRECT_URL = '/login/'
 
 TEMPLATES = [
@@ -103,15 +102,16 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'stock_bridge.wsgi.application'
+WSGI_APPLICATION = 'stockino.wsgi.application'
 
 
 # Database
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL')
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
 
 
@@ -162,7 +162,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static_cdn', 'static_root')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static_cdn', 'media_root')
 
-from stock_bridge.aws.conf import *
+#from stockino.aws.conf import *
 
 
 # SSL/TLS settings for https security
