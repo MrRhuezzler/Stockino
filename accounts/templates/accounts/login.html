@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block base_head %}
+<title>Login</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-12 col-md-4 mx-auto my-3">
+		<h1 class="text-center">Login</h1>
+	</div>
+</div>
+<hr/>
+<div class="row">
+	<div class="col-12 col-md-4 mx-auto my-3">
+		<form method="POST"> {% csrf_token %}
+		{{ form }}
+		<div class="row">
+			<div class="col my-1 mr-auto">
+				<button type="submit" class="btn btn-primary">Sign In</button>
+			</div>
+			<div class="col my-3 ml-auto">
+				<a href="{% url 'password_reset' %}" target="blank">Forgot Password?</a>
+			</div>
+		</div>
+		<div class="border-top pt-3">
+			<small class="text-muted">
+				Need An Account? <a class="ml-2" href="{% url 'register' %}">Sign Up</a>
+			</small>
+		</div>
+		</form>
+	</div>
+</div>
+
+{% endblock %}
