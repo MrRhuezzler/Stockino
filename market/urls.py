@@ -1,5 +1,5 @@
 from django.conf.urls import url
-
+from django.urls import path
 from .views import (
     CompanySelectionView,
     CompanyTransactionView,
@@ -15,11 +15,11 @@ app_name = 'Market'
 
 
 urlpatterns = [
-    url(r'^select/$', CompanySelectionView.as_view(), name='company_select'),
-    url(r'^transact/(?P<code>\w+)$', CompanyTransactionView.as_view(), name='transaction'),
-    url(r'^admin/(?P<code>\w+)$', CompanyAdminCompanyUpdateView.as_view(), name='admin'),
-    url(r'^create/$', CompanyCMPCreateView.as_view(), name='create_cmp'),
-    url(r'^company/api/(?P<code>\w+)$', CompanyCMPChartData.as_view(), name='cmp_api_data'),
-    url(r'^tax/$', deduct_tax, name='tax'),
-    url(r'^update/$', update_market, name='update')
+    path('select/', CompanySelectionView.as_view(), name='company_select'),
+    path('transact/<code>', CompanyTransactionView.as_view(), name='transaction'),
+    path('admin/<code>', CompanyAdminCompanyUpdateView.as_view(), name='admin'),
+    path('create/', CompanyCMPCreateView.as_view(), name='create_cmp'),
+    path('company/api/<code>', CompanyCMPChartData.as_view(), name='cmp_api_data'),
+    path('tax/', deduct_tax, name='tax'),
+    path('update/', update_market, name='update')
 ]
