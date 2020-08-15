@@ -16,7 +16,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if os.environ.get('DEBUG_VALUE'):
+    DEBUG = True
 
 ALLOWED_HOSTS = ['.herokuapp.com']
 
@@ -27,7 +28,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 BASE_URL = 'stockino.herokuapp.com'
 
-DEFAULT_ACTIVATION_DAYS = 7
+DEFAULT_ACTIVATION_DAYS = 2
 
 # This allows sendgrid to send emails to the specified id whenever server error occurs.
 DEFAULT_FROM_EMAIL = 'E-Club  Stockino'
