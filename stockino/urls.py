@@ -40,7 +40,7 @@ urlpatterns = [
     path('instructions/', instruction_view, name='instructions'),
     path('stocks/', include('market.urls', namespace='market')),
     path('history/', UserTransactionHistoryView.as_view(), name='transaction_history'),
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls)
 ]
 
 if settings.DEBUG:

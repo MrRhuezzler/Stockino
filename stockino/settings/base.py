@@ -19,9 +19,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', 'localhost']
 
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = config('EMAIL_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_PASS')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 BASE_URL = '127.0.0.1:8000'
@@ -29,11 +29,8 @@ BASE_URL = '127.0.0.1:8000'
 DEFAULT_ACTIVATION_DAYS = 7
 
 # This allows sendgrid to send emails to the specified id whenever server error occurs.
-DEFAULT_FROM_EMAIL = 'Morphosis Stock Bridge <morphosis@nitmz.ac.in>'
-MANAGERS = (
-    ('Morphosis NITMZ', 'morphosis@nitmz.ac.in'),
-)
-ADMINS = MANAGERS
+DEFAULT_FROM_EMAIL = 'E- Next Stockino'
+
 
 # Bank Data
 DEFAULT_LOAN_AMOUNT = Decimal(5000.00)
@@ -42,8 +39,8 @@ RATE_OF_INTEREST = Decimal(0.15)  # 15%
 TAX_RATE = Decimal(0.40)  # 40%
 
 # Global settings
-START_TIME = datetime(2018, 5, 4, 19, 30, 0)
-STOP_TIME = datetime(2018, 5, 5, 2, 00, 0)
+START_TIME = datetime(2020, 7, 4, 19, 30, 0)
+STOP_TIME = datetime(2020, 9, 5, 2, 00, 0)
 
 
 # Application definition
@@ -83,7 +80,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'stock_bridge.urls'
+ROOT_URLCONF = 'stockino.urls'
 LOGOUT_REDIRECT_URL = '/login/'
 
 TEMPLATES = [
@@ -102,7 +99,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'stock_bridge.wsgi.application'
+WSGI_APPLICATION = 'stockino.wsgi.application'
 
 
 # Database
@@ -163,7 +160,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static_cdn', 'static_root')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static_cdn', 'media_root')
 
-# from stock_bridge.aws.conf import *
+# from stockino.aws.conf import *
 
 
 # removing SSL/TLS settings for local environment

@@ -16,8 +16,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if os.environ.get('DEBUG_VALUE'):
-    DEBUG = True
+DEBUG = (os.environ.get('DEBUG_VALUE') == 'True')
 
 ALLOWED_HOSTS = ['.herokuapp.com']
 
@@ -64,7 +63,8 @@ INSTALLED_APPS = [
 
     # custom apps
     'accounts',
-    'market'
+    'market',
+    'chat'
 ]
 
 

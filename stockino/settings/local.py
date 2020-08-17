@@ -9,7 +9,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 
 
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
+# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
@@ -30,9 +30,6 @@ DEFAULT_ACTIVATION_DAYS = 7
 
 # This allows sendgrid to send emails to the specified id whenever server error occurs.
 DEFAULT_FROM_EMAIL = 'PSG Eclub Stockino'
-MANAGERS = (
-)
-ADMINS = MANAGERS
 
 # Bank Data
 DEFAULT_LOAN_AMOUNT = Decimal(5000.00)
@@ -41,8 +38,8 @@ RATE_OF_INTEREST = Decimal(0.15)  # 15%
 TAX_RATE = Decimal(0.40)  # 40%
 
 # Global settings
-START_TIME = datetime(2020, 5, 4, 19, 30, 0)
-STOP_TIME = datetime(2021, 5, 5, 2, 00, 0)
+START_TIME = datetime(2020, 8, 4, 19, 30, 0)
+STOP_TIME = datetime(2020, 9, 5, 2, 00, 0)
 
 
 # Application definition
@@ -59,7 +56,7 @@ INSTALLED_APPS = [
     # 3rd party
     'rest_framework',
     'storages',
-
+    'crispy_forms',
     # custom apps
     'accounts',
     'market'
@@ -175,3 +172,5 @@ CSRF_COOKIE_SECURE = False
 SECURE_HSTS_SECONDS = None
 SECURE_HSTS_INCLUDE_SUBDOMAINS = False
 SECURE_FRAME_DENY = False
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
