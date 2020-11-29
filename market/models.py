@@ -64,7 +64,7 @@ class Company(models.Model):
         print(self.change)
         self.save()
 
-    def update_cmp(self):
+    def update_cmp(self): # TODO : self.cmp = formula from pic
         old_price = self.cmp
         self.cmp += (
             self.cmp * Decimal(self.temp_stocks_bought) - self.cmp * Decimal(self.temp_stocks_sold)
@@ -75,7 +75,7 @@ class Company(models.Model):
         self.save()
 
     def user_buy_stocks(self, quantity):
-        if quantity <= self.stocks_remaining:
+        if quantity <= self.stocks_remaining: # TODO : Rejection Formula
             self.stocks_remaining -= quantity
             self.temp_stocks_bought += quantity
             self.save()

@@ -30,7 +30,7 @@ def deduct_tax(request):
     """ Deduct income tax """
     if request.user.is_superuser:
         for user in User.objects.all():
-            tax = user.cash * Decimal(0.4)
+            tax = user.cash * Decimal(0.1)
             user.cash -= tax
             user.save()
         return HttpResponse('success')
@@ -138,7 +138,7 @@ class CompanyTransactionView(LoginRequiredMixin, CountNewsMixin, View):
             investment_obj, obj_created = InvestmentRecord.objects.get_or_create(user=user, company=company)
             if quantity > 0:
                 if mode == 'buy':
-                    purchase_amount = Decimal(quantity) * price
+                    purchase_amount = Decimal(quantity) * price # TODO : quote price
                     if user.cash >= purchase_amount:
                         if company.stocks_remaining >= quantity:
                             # user.buy_stocks(quantity, price)

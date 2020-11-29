@@ -113,15 +113,17 @@ class User(AbstractBaseUser):
         return self.staff
 
     def buy_stocks(self, quantity, price):
-        purchase_amount = Decimal(quantity) * price
+        purchase_amount = Decimal(quantity) * price # TODO : quoted price
         if self.cash >= purchase_amount:
             self.cash -= Decimal(quantity) * price
+            self.cash -= 20
             self.save()
             return True
         return False
 
     def sell_stocks(self, quantity, price):
         self.cash += Decimal(quantity) * price
+        self.cash -= 20
         self.save()
 
     def issue_loan(self):
