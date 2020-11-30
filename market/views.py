@@ -134,16 +134,36 @@ class CompanyTransactionView(LoginRequiredMixin, CountNewsMixin, View):
             user = request.user
             mode = request.POST.get('mode')
             quantity = int(request.POST.get('quantity'))
-            price = company.cmp
+            price = float(request.POST.get('qoute_amount'))
             investment_obj, obj_created = InvestmentRecord.objects.get_or_create(user=user, company=company)
             if quantity > 0:
                 if mode == 'buy':
-                    purchase_amount = Decimal(quantity) * price # TODO : quote price
+                    purchase_amount = Decimal(quantity) * price
                     if user.cash >= purchase_amount:
                         if company.stocks_remaining >= quantity:
-                            # user.buy_stocks(quantity, price)
-                            # company.user_buy_stocks(quantity)
-                            # investment_obj.add_stocks(quantity)
+                            if company.user_buy_stocks(quantity, price):
+                                # user.buy_stocks(quantity, price)
+                                # investment_obj.add_stocks(quantity)
+                                obj = Transaction.objects.create(
+                                    user=user,
+                                    company=company,
+                                    num_stocks=quantity,
+                                    price=price,
+                                    mode=mode,
+                                    user_net_worth=InvestmentRecord.objects.calculate_net_worth(user)
+                                )
+                                messages.success(request, 'Transaction Complete!')
+                            else:
+                                messages.error(request, "Your transaction got rejected !")
+                        else:
+                            messages.error(request, 'The company does not have that many stocks left!')
+                    else:
+                        messages.error(request, 'Insufficient Balance for this transaction!')
+                elif mode == 'sell':
+                    if quantity <= investment_obj.stocks and quantity <= company.stocks_offered:
+                        if company.user_sell_stocks(quantity, price):
+                            # user.sell_stocks(quantity, price)
+                            # investment_obj.reduce_stocks(quantity)
                             obj = Transaction.objects.create(
                                 user=user,
                                 company=company,
@@ -154,23 +174,7 @@ class CompanyTransactionView(LoginRequiredMixin, CountNewsMixin, View):
                             )
                             messages.success(request, 'Transaction Complete!')
                         else:
-                            messages.error(request, 'The company does not have that many stocks left!')
-                    else:
-                        messages.error(request, 'Insufficient Balance for this transaction!')
-                elif mode == 'sell':
-                    if quantity <= investment_obj.stocks and quantity <= company.stocks_offered:
-                        # user.sell_stocks(quantity, price)
-                        # company.user_sell_stocks(quantity)
-                        # investment_obj.reduce_stocks(quantity)
-                        obj = Transaction.objects.create(
-                            user=user,
-                            company=company,
-                            num_stocks=quantity,
-                            price=price,
-                            mode=mode,
-                            user_net_worth=InvestmentRecord.objects.calculate_net_worth(user)
-                        )
-                        messages.success(request, 'Transaction Complete!')
+                            messages.error(request, "Your transaction got rejected !")
                     else:
                         messages.error(request, 'Please enter a valid quantity!')
                 else:

@@ -66,28 +66,40 @@ class Company(models.Model):
 
     def update_cmp(self): # TODO : self.cmp = formula from pic
         old_price = self.cmp
-        self.cmp += (
-            self.cmp * Decimal(self.temp_stocks_bought) - self.cmp * Decimal(self.temp_stocks_sold)
-        ) / Decimal(self.stocks_offered)
+        
+        # self.cmp += (
+        #     self.cmp * Decimal(self.temp_stocks_bought) - self.cmp * Decimal(self.temp_stocks_sold)
+        # ) / Decimal(self.stocks_offered)
+
+        self.cmp += ((Decimal(self.temp_stocks_bought) - Decimal(self.temp_stocks_sold)) / (Decimal(self.stocks_offered)))
+
         self.calculate_change(old_price)
         self.temp_stocks_bought = 0
         self.temp_stocks_sold = 0
         self.save()
 
-    def user_buy_stocks(self, quantity):
-        if quantity <= self.stocks_remaining: # TODO : Rejection Formula
-            self.stocks_remaining -= quantity
-            self.temp_stocks_bought += quantity
-            self.save()
-            return True
+    def user_buy_stocks(self, quantity, price):
+        if quantity <= self.stocks_remaining:
+            value_at_instant = (self.stocks_offered - self.stocks_remaining) / (self.stocks_offered * 8)
+            value_at_instant += self.cmp
+            if value_at_instant <= price:
+                self.stocks_remaining -= quantity
+                self.temp_stocks_bought += price
+                self.save()
+                return True
+
         return False
 
-    def user_sell_stocks(self, quantity):
+    def user_sell_stocks(self, quantity, price):
         if quantity <= self.stocks_offered:
-            self.stocks_remaining += quantity
-            self.temp_stocks_sold += quantity
-            self.save()
-            return True
+            value_at_instant = self.cmp
+            value_at_instant -= ((self.stocks_offered - self.stocks_remaining) / (self.stocks_offered * 8))
+            if value_at_instant >= price:
+                self.stocks_remaining += quantity
+                self.temp_stocks_sold += price
+                self.save()
+                return True
+
         return False
 
 
