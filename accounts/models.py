@@ -70,6 +70,7 @@ class User(AbstractBaseUser):
     username = models.CharField(unique=True, max_length=120)
     email = models.EmailField(unique=True, max_length=255)
     full_name = models.CharField(max_length=255, blank=True, null=True)
+    teammates = models.CharField(max_length=100, blank=True, null=True)
     cash = models.DecimalField(max_digits=20, decimal_places=2, default=DEFAULT_LOAN_AMOUNT)
     loan = models.DecimalField(max_digits=20, decimal_places=2, default=DEFAULT_LOAN_AMOUNT)
     loan_count = models.IntegerField(default=1)  # For arithmetic interest calculation
@@ -127,7 +128,7 @@ class User(AbstractBaseUser):
         self.save()
 
     def issue_loan(self):
-        if self.loan_count_absolute < MAX_LOAN_ISSUE:
+        if self.loan_count_absolute <= MAX_LOAN_ISSUE:
             self.loan_count += 1
             self.loan_count_absolute += 1
             self.loan += DEFAULT_LOAN_AMOUNT

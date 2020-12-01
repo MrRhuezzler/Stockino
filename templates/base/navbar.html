@@ -59,8 +59,15 @@
 						</div>
 					</li>
 					{% if request.user.is_superuser %}
-						<li class="nav-item">
-							<a class="nav-link" href="/admin/" target="blank">Admin</a>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Admin
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" href="/admin/">Panel</a>
+								<a class="dropdown-item" href='{% url "market:tax" %}'>Tax</a>
+								<a class="dropdown-item" href='{% url "market:update" %}'>Update Market</a>
+							</div>
 						</li>
 					{% endif %}
 				{% else %}

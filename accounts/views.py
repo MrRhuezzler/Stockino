@@ -30,7 +30,7 @@ User = get_user_model()
 START_TIME = timezone.make_aware(getattr(settings, 'START_TIME'))
 STOP_TIME = timezone.make_aware(getattr(settings, 'STOP_TIME'))
 
-
+# In admin panel
 @login_required
 def cancel_loan(request):
     """ Deduct entire loan amount from user's balance """
@@ -68,6 +68,7 @@ class LoanView(LoginRequiredMixin, CountNewsMixin, View):
         if current_time >= START_TIME and current_time <= STOP_TIME:  # transaction has to be within game time
             mode = request.POST.get('mode')
             user = request.user
+            # Messages
             if mode == 'issue':
                 if user.issue_loan():
                     messages.success(request, 'Loan has been issued.')
@@ -121,7 +122,7 @@ class LeaderBoardView(CountNewsMixin, View):
 
     def get(self, request, *args, **kwargs):
         data = []
-        user_qs = User.objects.all()
+        user_qs = User.objects.filter(is_superuser=False)
         for user in user_qs:
             net_worth = InvestmentRecord.objects.calculate_net_worth(user)
             data.append((user.username, user.full_name, net_worth, user.coeff_of_variation))

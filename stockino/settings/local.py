@@ -1,6 +1,6 @@
 import os
 from decimal import Decimal
-#from decouple import config
+# from decouple import config
 from datetime import datetime
 
 
@@ -33,13 +33,13 @@ DEFAULT_FROM_EMAIL = 'PSG Eclub Stockino'
 
 # Bank Data
 DEFAULT_LOAN_AMOUNT = Decimal(5000.00)
-MAX_LOAN_ISSUE = 2
+MAX_LOAN_ISSUE = 10
 RATE_OF_INTEREST = Decimal(0.15)  # 15%
 TAX_RATE = Decimal(0.40)  # 40%
 
 # Global settings
-START_TIME = datetime(2020, 8, 4, 19, 30, 0)
-STOP_TIME = datetime(2020, 9, 5, 2, 00, 0)
+START_TIME = datetime(2020, 10, 25, 0, 0, 0)
+STOP_TIME = datetime(2020, 12, 25, 0, 0, 0)
 
 
 # Application definition

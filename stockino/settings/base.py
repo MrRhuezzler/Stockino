@@ -39,8 +39,8 @@ RATE_OF_INTEREST = Decimal(0.15)  # 15%
 TAX_RATE = Decimal(0.40)  # 40%
 
 # Global settings
-START_TIME = datetime(2020, 7, 4, 19, 30, 0)
-STOP_TIME = datetime(2020, 9, 5, 2, 00, 0)
+START_TIME = datetime(2020, 10, 25, 0, 0, 0)
+STOP_TIME = datetime(2020, 12, 25, 0, 0, 0)
 
 
 # Application definition

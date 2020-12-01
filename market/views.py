@@ -23,6 +23,7 @@ from stockino.mixins import LoginRequiredMixin, CountNewsMixin, AdminRequiredMix
 User = get_user_model()
 START_TIME = timezone.make_aware(getattr(settings, 'START_TIME'))
 STOP_TIME = timezone.make_aware(getattr(settings, 'STOP_TIME'))
+TAX_RATE = getattr(settings, 'TAX_RATE')
 
 
 @login_required
@@ -30,7 +31,7 @@ def deduct_tax(request):
     """ Deduct income tax """
     if request.user.is_superuser:
         for user in User.objects.all():
-            tax = user.cash * Decimal(0.1)
+            tax = user.cash * TAX_RATE
             user.cash -= tax
             user.save()
         return HttpResponse('success')
@@ -134,7 +135,7 @@ class CompanyTransactionView(LoginRequiredMixin, CountNewsMixin, View):
             user = request.user
             mode = request.POST.get('mode')
             quantity = int(request.POST.get('quantity'))
-            price = float(request.POST.get('qoute_amount'))
+            price = Decimal(request.POST.get('qoute_amount'))
             investment_obj, obj_created = InvestmentRecord.objects.get_or_create(user=user, company=company)
             if quantity > 0:
                 if mode == 'buy':
