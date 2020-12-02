@@ -41,6 +41,8 @@ TAX_RATE = Decimal(0.40)  # 40%
 START_TIME = datetime(2020, 10, 25, 0, 0, 0)
 STOP_TIME = datetime(2020, 12, 25, 0, 0, 0)
 
+# Discord News
+DISCORD_NEWS_BOT_URL = "https://discord.com/api/webhooks/783525869922549760/pj7xct1YctNiAgA6U0mDo6bv981_BCqUZwN9tF1rwGYyYvYvcSkgbwfTZHe7NSqRHZjU"
 
 # Application definition
 

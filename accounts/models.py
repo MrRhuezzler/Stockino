@@ -1,6 +1,7 @@
 from datetime import timedelta
 from decimal import Decimal
 import numpy as np
+from dhooks import Webhook, Embed
 
 from django.conf import settings
 from django.db import models
@@ -20,6 +21,7 @@ DEFAULT_LOAN_AMOUNT = getattr(settings, 'DEFAULT_LOAN_AMOUNT', Decimal(10000.00)
 RATE_OF_INTEREST = getattr(settings, 'RATE_OF_INTEREST', Decimal(0.15))
 MAX_LOAN_ISSUE = getattr(settings, 'MAX_LOAN_ISSUE')
 
+DISCORD_NEWS_BOT_URL = getattr(settings, 'DISCORD_NEWS_BOT_URL')
 
 class UserManager(BaseUserManager):
 
@@ -282,3 +284,25 @@ class News(models.Model):
 
     def __str__(self):
         return self.title
+
+
+def pre_save_news_receiver(sender, instance, *args, **kwargs):
+    hook = Webhook(DISCORD_NEWS_BOT_URL)
+    hook.send(instance.content)
+    # obj = {
+    # "content": "** @everyone Here is a news update ! **\n.",
+    # "embeds": [
+    #     {
+    #     "title": f"{instance.title}",
+    #     "description": f"{instance.content}",
+    #     "color": 720640,
+    #     "footer": {
+    #         "text": "Last Updated"
+    #     },
+    #     "timestamp": f'{instance.updated.strftime("%Y - %m - %d")}'
+    #     }
+    # ],
+    # "username": "StockiBot"
+    # }
+
+pre_save.connect(pre_save_news_receiver, sender=News)
