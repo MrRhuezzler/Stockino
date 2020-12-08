@@ -85,7 +85,7 @@ class Company(models.Model):
             if value_at_instant <= price:
                 # Change only returns true or false
                 self.stocks_remaining -= quantity
-                self.temp_stocks_bought += price
+                self.temp_stocks_bought += (quantity * price)
                 self.save()
                 return True
 
@@ -97,7 +97,7 @@ class Company(models.Model):
             value_at_instant -= (((Decimal(self.stocks_offered) - Decimal(self.stocks_remaining)) / (Decimal(self.stocks_offered) * 8)) * Decimal(self.cmp))
             if value_at_instant >= price:
                 self.stocks_remaining += quantity
-                self.temp_stocks_sold += price
+                self.temp_stocks_sold += (quantity * price)
                 self.save()
                 return True
 
