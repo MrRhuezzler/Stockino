@@ -64,7 +64,7 @@ INSTALLED_APPS = [
     # custom apps
     'accounts',
     'market',
-    'chat'
+    # 'chat'
 ]
 
 
