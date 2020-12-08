@@ -12,6 +12,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
+# Discord News
+DISCORD_NEWS_BOT_URL = "https://discord.com/api/webhooks/783525869922549760/pj7xct1YctNiAgA6U0mDo6bv981_BCqUZwN9tF1rwGYyYvYvcSkgbwfTZHe7NSqRHZjU"
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
