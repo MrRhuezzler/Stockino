@@ -14,6 +14,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 
 # Discord News
 DISCORD_NEWS_BOT_URL = os.environ.get('DISCORD_NEWS_URL')
+DISCORD_NEWS_BOT_AVATAR = os.environ.get('DISCORD_NEWS_BOT_AVATAR', "https://media1.tenor.com/images/ccf584b7ebafc83beb1b929ae93421ec/tenor.gif?itemid=5753267"
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')

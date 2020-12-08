@@ -22,6 +22,8 @@ RATE_OF_INTEREST = getattr(settings, 'RATE_OF_INTEREST', Decimal(0.15))
 MAX_LOAN_ISSUE = getattr(settings, 'MAX_LOAN_ISSUE')
 
 DISCORD_NEWS_BOT_URL = getattr(settings, 'DISCORD_NEWS_BOT_URL')
+DISCORD_NEWS_BOT_AVATAR = getattr(settings, 'DISCORD_NEWS_BOT_AVATAR')
+
 
 class UserManager(BaseUserManager):
 
@@ -288,7 +290,21 @@ class News(models.Model):
 
 def pre_save_news_receiver(sender, instance, *args, **kwargs):
     hook = Webhook(DISCORD_NEWS_BOT_URL)
-    hook.send(instance.content)
+    
+    em = Embed(
+        title = instance.title,
+        description = instance.content,
+        timestamp='now',
+        color=0xFF0022
+    )
+
+    hook.send(
+        content="@everyone Here is a news update !", 
+        embed=em,
+        username="News",
+        avatar_url=DISCORD_NEWS_BOT_AVATAR,
+    )
+
     # obj = {
     # "content": "** @everyone Here is a news update ! **\n.",
     # "embeds": [
