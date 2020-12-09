@@ -65,7 +65,7 @@ INSTALLED_APPS = [
     # 3rd party
     'rest_framework',
     'storages',
-
+    'crispy_forms',
     # custom apps
     'accounts',
     'market',
