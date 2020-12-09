@@ -48,7 +48,7 @@ TAX_RATE = Decimal(0.40)  # 40%
 
 # Global settings
 START_TIME = datetime(2020, 10, 25, 0, 0, 0)
-STOP_TIME = datetime(2020, 12, 25, 0, 0, 0)
+STOP_TIME = datetime(2021, 12, 25, 0, 0, 0)
 
 
 # Application definition
