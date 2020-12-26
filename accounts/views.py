@@ -13,6 +13,9 @@ from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.urls import reverse
 
+from django.utils import timezone
+import pytz
+
 from .forms import LoginForm, RegisterForm, ReactivateEmailForm
 from .models import EmailActivation, News
 from stockino.mixins import (
@@ -53,7 +56,7 @@ def deduct_interest(request):
 
 class NewsView(LoginRequiredMixin, CountNewsMixin, ListView):
     template_name = 'accounts/news.html'
-    queryset = News.objects.filter(is_active=True)
+    queryset = [{'title' : x.title, 'content' : x.content, 'updated' : timezone.localtime(x.updated, pytz.timezone('Asia/Kolkata'))} for x in News.objects.filter(is_active=True)]
 
 
 class LoanView(LoginRequiredMixin, CountNewsMixin, View):

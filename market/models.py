@@ -5,6 +5,9 @@ from django.db.models.signals import pre_save, post_save
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 
+from django.utils import timezone
+import pytz
+
 
 User = get_user_model()
 
@@ -164,7 +167,7 @@ class Transaction(models.Model):
 
     def __str__(self):
         return '{user}: {company} - {time}'.format(
-            user=self.user.username, company=self.company.name, time=self.timestamp
+            user=self.user.username, company=self.company.name, time=timezone.localtime(self.timestamp, pytz.timezone('Asia/Kolkata')).strftime("%Y-%m-%d | %H:%M:%S")
         )
 
 
