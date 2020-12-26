@@ -75,10 +75,10 @@ class User(AbstractBaseUser):
     email = models.EmailField(unique=True, max_length=255)
     full_name = models.CharField(max_length=255, blank=True, null=True)
     teammates = models.CharField(max_length=100, blank=True, null=True)
-    cash = models.DecimalField(max_digits=20, decimal_places=2, default=DEFAULT_LOAN_AMOUNT)
-    loan = models.DecimalField(max_digits=20, decimal_places=2, default=DEFAULT_LOAN_AMOUNT)
-    loan_count = models.IntegerField(default=1)  # For arithmetic interest calculation
-    loan_count_absolute = models.IntegerField(default=1)  # For overall loan issue count
+    cash = models.DecimalField(max_digits=20, decimal_places=2, default=Decimal(100000.00))
+    loan = models.DecimalField(max_digits=20, decimal_places=2, default=0)
+    loan_count = models.IntegerField(default=0)  # For arithmetic interest calculation
+    loan_count_absolute = models.IntegerField(default=0)  # For overall loan issue count
     coeff_of_variation = models.DecimalField(max_digits=20, decimal_places=2, default=0.00)  # For tie breaker in leaderboard
     is_active = models.BooleanField(default=True)
     staff = models.BooleanField(default=False)
@@ -118,8 +118,8 @@ class User(AbstractBaseUser):
         return self.staff
 
     def buy_stocks(self, quantity, price):
-        purchase_amount = Decimal(quantity) * price # TODO : quoted price
-        if self.cash >= purchase_amount:
+        purchase_amount = Decimal(quantity) * price
+        if self.cash >= purchase_amount + 20:
             self.cash -= Decimal(quantity) * price
             self.cash -= 20
             self.save()
@@ -240,7 +240,8 @@ class EmailActivation(models.Model):
                 path = '{base}{path}'.format(base=base_url, path=key_path)
                 context = {
                     'path': path,
-                    'email': self.email
+                    'email': self.email,
+                    'username' : self.user.username,
                 }
                 txt_ = get_template('registration/emails/verify.txt').render(context)
                 html_ = get_template('registration/emails/verify.html').render(context)
@@ -289,36 +290,23 @@ class News(models.Model):
 
 
 def pre_save_news_receiver(sender, instance, *args, **kwargs):
-    hook = Webhook(DISCORD_NEWS_BOT_URL)
-    
-    em = Embed(
-        title = instance.title,
-        description = instance.content,
-        timestamp='now',
-        color=0xFF0022
-    )
 
-    hook.send(
-        content="@everyone Here is a news update !", 
-        embed=em,
-        username="News",
-        avatar_url=DISCORD_NEWS_BOT_AVATAR,
-    )
+    if(instance.is_active):
 
-    # obj = {
-    # "content": "** @everyone Here is a news update ! **\n.",
-    # "embeds": [
-    #     {
-    #     "title": f"{instance.title}",
-    #     "description": f"{instance.content}",
-    #     "color": 720640,
-    #     "footer": {
-    #         "text": "Last Updated"
-    #     },
-    #     "timestamp": f'{instance.updated.strftime("%Y - %m - %d")}'
-    #     }
-    # ],
-    # "username": "StockiBot"
-    # }
+        hook = Webhook(DISCORD_NEWS_BOT_URL)
+        
+        em = Embed(
+            title = instance.title,
+            description = instance.content,
+            timestamp='now',
+            color=0xFF0022
+        )
+
+        hook.send(
+            content="@everyone Here is a news update !", 
+            embed=em,
+            username="News",
+            avatar_url=DISCORD_NEWS_BOT_AVATAR,
+        )
 
 pre_save.connect(pre_save_news_receiver, sender=News)

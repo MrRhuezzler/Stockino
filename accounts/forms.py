@@ -66,8 +66,8 @@ class UserAdminChangeForm(forms.ModelForm):
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(label='Username', widget=forms.TextInput(
-        attrs={'class': 'form-control my-2', 'placeholder': 'Username'}
+    username = forms.CharField(label='Teamname', widget=forms.TextInput(
+        attrs={'class': 'form-control my-2', 'placeholder': 'Teamname'}
     ))
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={'class': 'form-control my-2', 'placeholder': 'Password'}
@@ -126,36 +126,49 @@ class LoginForm(forms.Form):
 
 
 class RegisterForm(forms.ModelForm):
-    username = forms.CharField(label='Username', widget=forms.TextInput(
-        attrs={'class': 'form-control my-2', 'placeholder': 'Username'}
+    username = forms.CharField(label='Teamname', widget=forms.TextInput(
+        attrs={'class': 'form-control my-2', 'placeholder': 'Teamname'}
     ))
 
-    full_name = forms.CharField(label='Team Member 1', widget=forms.TextInput(
-        attrs={'class': 'form-control my-2', 'placeholder': 'Team Member 1'}
-    ))    
     email = forms.EmailField(label='Email', widget=forms.EmailInput(
         attrs={'class': 'form-control my-2', 'placeholder': 'Email'}
     ))
+
+    full_name = forms.CharField(label='Member #1', widget=forms.TextInput(
+        attrs={'class': 'form-control my-2', 'placeholder': 'Name'}
+    ))
+    
+    full_name_rollno = forms.CharField(label='', widget=forms.TextInput(
+        attrs={'class': 'form-control my-2', 'placeholder': 'RollNo'}
+    ))
+
     
     # Not Required
 
-    teamMember_2_Name = forms.CharField(label='Team Member 2', widget=forms.TextInput(
-        attrs={'class': 'form-control my-2', 'placeholder': 'Team Member 2'}
+    teamMember_2_Name = forms.CharField(label='Member #2', widget=forms.TextInput(
+        attrs={'class': 'form-control my-2', 'placeholder': 'Name'}
     ))
-    teamMember_3_Name = forms.CharField(label='Team Member 3', widget=forms.TextInput(
-        attrs={'class': 'form-control my-2', 'placeholder': 'Team Member 3'}
+    teamMember_2_rollno = forms.CharField(label='', widget=forms.TextInput(
+        attrs={'class': 'form-control my-2', 'placeholder': 'RollNo'}
+    ))
+    teamMember_3_Name = forms.CharField(label='Member #3', widget=forms.TextInput(
+        attrs={'class': 'form-control my-2', 'placeholder': 'Name'}
+    ))
+    teamMember_3_rollno = forms.CharField(label='', widget=forms.TextInput(
+        attrs={'class': 'form-control my-2', 'placeholder': 'RollNo'}
     ))
 
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput(
         attrs={'class': 'form-control my-2', 'placeholder': 'Password'}
     ))
+
     password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput(
         attrs={'class': 'form-control my-2', 'placeholder': 'Password'}
     ))
 
     class Meta:
         model = User
-        fields = ('username', 'full_name', 'email')
+        fields = ('username', 'email', 'full_name')
 
     def clean_password2(self):
         """ Check that the two password entries match """
@@ -174,7 +187,7 @@ class RegisterForm(forms.ModelForm):
     def save(self, commit=True):
         """ Save the provided password in hashed format """
         user = super(RegisterForm, self).save(commit=False)
-        user.teammates = ", ".join([self.cleaned_data.get('teamMember_2_Name'), self.cleaned_data.get('teamMember_3_Name')])
+        user.teammates = ", ".join([f"{self.cleaned_data.get('full_name')}#{self.cleaned_data.get('full_name_rollno')}", f"{self.cleaned_data.get('teamMember_2_Name')}#{self.cleaned_data.get('teamMember_2_rollno')}", f"{self.cleaned_data.get('teamMember_3_Name')}#{self.cleaned_data.get('teamMember_3_rollno')}"])
         user.set_password(self.cleaned_data["password1"])
         user.is_active = False
         if commit:

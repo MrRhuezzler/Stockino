@@ -1,0 +1,89 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+   <head>
+       <link rel="stylesheet" type="text/css" href="{{site}}{% static 'css/bootstrap.css' %}">
+   </head>
+   <body class="container-fluid">
+     
+
+       
+       
+
+         
+            
+         
+       
+
+       <!-- Punchline for company -->
+       
+
+       
+          We are expert in solving your problems.     
+       
+       
+
+
+      
+
+
+ {% block home-marquee %}
+ 
+ 
+
+ 
+{{ user.first_name }},
+ 
+
+ </div>
+ 
+ <!-- Email Message Body goes here -->
+ 
+
+ {{email_body}}
+ 
+
+ </div>
+ 
+ <!-- Any type of links to point goes here -->
+ {% if link %}
+ 
+
+ 
+
+  {{ link }} 
+ 
+
+ </div>
+ {% endif %}
+
+ <!-- Extra text included in the mail goes here -->
+ {% if extra %}
+ 
+
+ 
+
+ {{extra}}
+ 
+
+ </div>
+ {% endif %}
+ 
+ <!-- Thank You text -->
+ 
+
+ Thank you
+ 
+
+ Company Name
+ 
+
+ </div>
+ {% endblock %}
+ </div>
+ </div>
+ <!-- Footer for company with year and copyright -->
+ <footer>
+ <center>Copyright {% now "Y" %} All Rights Reserved, abcd</center>
+ </footer>
+ </body>
+</html>

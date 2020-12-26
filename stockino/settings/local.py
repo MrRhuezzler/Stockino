@@ -42,7 +42,7 @@ START_TIME = datetime(2020, 10, 25, 0, 0, 0)
 STOP_TIME = datetime(2020, 12, 25, 0, 0, 0)
 
 # Discord News
-DISCORD_NEWS_BOT_URL = "https://discord.com/api/webhooks/783525869922549760/pj7xct1YctNiAgA6U0mDo6bv981_BCqUZwN9tF1rwGYyYvYvcSkgbwfTZHe7NSqRHZjU"
+DISCORD_NEWS_BOT_URL = "https://discord.com/api/webhooks/785882683426865162/xZI0siSa_N8L1YdxDmEvk4k2fxuf4_--rF85j1kH8BjCUwteJmfIc8cp49ltvIzKww5R"
 DISCORD_NEWS_BOT_AVATAR = "https://media1.tenor.com/images/ccf584b7ebafc83beb1b929ae93421ec/tenor.gif?itemid=5753267"
 
 # Application definition
