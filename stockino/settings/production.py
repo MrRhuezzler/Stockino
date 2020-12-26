@@ -41,14 +41,14 @@ MANAGERS = (
 ADMINS = MANAGERS
 
 # Bank Data
-DEFAULT_LOAN_AMOUNT = Decimal(25000.00)
-MAX_LOAN_ISSUE = 2
-RATE_OF_INTEREST = Decimal(0.10)  # 10%
-TAX_RATE = Decimal(0.15)  # 15%
+DEFAULT_LOAN_AMOUNT = Decimal(5000.00)
+MAX_LOAN_ISSUE = 10
+RATE_OF_INTEREST = Decimal(0.15)  # 15%
+TAX_RATE = Decimal(0.40)  # 40%
 
 # Global settings
 START_TIME = datetime(2020, 10, 25, 0, 0, 0)
-STOP_TIME = datetime(2020, 12, 25, 0, 0, 0)
+STOP_TIME = datetime(2021, 12, 25, 0, 0, 0)
 
 
 # Application definition
@@ -65,7 +65,7 @@ INSTALLED_APPS = [
     # 3rd party
     'rest_framework',
     'storages',
-
+    'crispy_forms',
     # custom apps
     'accounts',
     'market',
